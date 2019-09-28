@@ -1,0 +1,350 @@
+Set-ADAccountPassword -Identity Apprentice01 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "password" -Force)
+	Write-Output "The password for the next level is the Powershell build version. Note - Please be sure to include all periods" -n > C:\Users\Apprentice01\Desktop\challenge.txt
+
+Set-ADAccountPassword -Identity Apprentice02 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "$(($PSVersionTable.BuildVersion).ToString())" -Force)
+	Write-Output "The password for the next level is the short name of the domain in which this server is a part of." -n > C:\Users\Apprentice02\Desktop\challenge.txt
+
+Set-ADAccountPassword -Identity Apprentice03 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "army" -Force)
+	Write-Output "The password for the next level is in a readme file somewhere in this user’s profile." -n > C:\Users\Apprentice03\Desktop\challenge.txt
+	
+Set-ADAccountPassword -Identity Apprentice04 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "123456" -Force)
+	Write-Output "The password for the next level is in a file in a hidden directory in the root of this user’s profile." -n > C:\Users\Apprentice04\Desktop\challenge.txt
+	Write-Output "123456" > C:\Users\Apprentice03\Favorites\README
+	icacls C:\Users\Apprentice03 /grant Apprentice03:F /T /C
+
+Set-ADAccountPassword -Identity Apprentice05 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "ketchup" -Force)
+	Write-Output "The password for the next level is in a file in a directory on the desktop with spaces in it." -n > C:\Users\Apprentice05\Desktop\challenge.txt
+	New-Item -ItemType Directory -Path "C:\Users\Apprentice04\secretsauce" -Force
+	Write-Output "ketchup" > C:\Users\Apprentice04\secretsauce\saucey
+	attrib +h C:\Users\Apprentice04\secretsauce
+	icacls C:\Users\Apprentice04 /grant Apprentice04:F /T /C 
+
+Set-ADAccountPassword -Identity Apprentice06 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "987654321" -Force)
+	Write-Output "The password for the next level is the manufacturing name of the only USB drive that was plugged into this server at some point." -n > C:\Users\Apprentice06\Desktop\challenge.txt
+	$dirs = @("1    -     99","100     -     199","a     -      z","z                                                                                                           -                                                                          a")
+	foreach ($dir in $dirs) {
+		New-Item -ItemType Directory -Path C:\Users\Apprentice05\Desktop\$dir -Force
+		}
+	Write-Output "987654321" > "C:\Users\Apprentice05\Desktop\z                                                                                                           -                                                                          a\space.txt"
+	icacls C:\Users\Apprentice05 /grant Apprentice05:F /T /C
+
+Set-ADAccountPassword -Identity Apprentice07 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "SanDisk" -Force)
+	Write-Output "The password for the next level is the description of the Lego Land service." -n > C:\Users\Apprentice07\Desktop\challenge.txt
+	Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\USBSTOR" -Name Start -Value 1 
+	New-Item "C:\windows\system32" -ItemType File -Name reg.ps1 -Force
+		Write-Output 'New-Item "HKLM:\SYSTEM\CurrentControlSet\Enum" -Name USBSTOR -Force' > "C:\windows\system32\reg.ps1"
+			Write-Output 'New-Item "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "Device Parameters" -Force' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "Capabilities" -Value "0X00000010" -PropertyType DWord | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "Class" -Value "DiskDrive" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "ClassGUID" -Value "{4d36e967-e325-11ce-bfc1-08002be10318}" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "CompatibleIDs" -Value "USBSTOR\Disk USBSTOR\RAW" -PropertyType MultiString | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "ConfigFlags" -Value "0X00000000" -PropertyType DWord | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "ContainerID" -Value "{c2dc3c42-a281-557a-a6ed-e607894e99b3}" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "DeviceDesc" -Value "@disk.inf;%disk_devdesc%;Disk Drive" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "Driver" -Value "{4d36e967-e325-11ce-bfc1-08002be10318}\0001" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "FriendlyName" -Value "SanDisk Cruzer Blade USB Device" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "HardwareID" -Value "USBSTOR\DiskSanDisk_Cruzer_Blade___PMAP USBST..." -PropertyType MultiString | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "Mfg" -Value "@disk.inf;%genmanufacturer%;Standard disk drives" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "Service" -Value "disk" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+				Write-Output 'New-Item "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0\Device Parameters" -Name "MediaChangeNotification" -Force' >> "C:\windows\system32\reg.ps1"
+				Write-Output 'New-Item "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0\Device Parameters" -Name "Partmgr" -Force' >> "C:\windows\system32\reg.ps1"
+					Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0\Device Parameters\Partmgr" -Name "Attributes" -Value "0X00000000" -PropertyType DWord | Out-Null' >> "C:\windows\system32\reg.ps1"
+					Write-Output 'New-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0\Device Parameters\Partmgr" -Name "DiskId" -Value "{116c15b5-5f04-11e5-9d2b-000c293089ea}" -PropertyType String | Out-Null' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-Item "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "LogConf" -Force' >> "C:\windows\system32\reg.ps1"
+			Write-Output 'New-Item "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR\Disk_Ven_SanDisk_Prod_Cruzer_Blade_Rev_PMAP\CF52A6CB0" -Name "Properties" -Force' >> "C:\windows\system32\reg.ps1"
+		schtasks /create /tn "Reg" /tr "powershell.exe -file C:\windows\system32\reg.ps1" /ru SYSTEM /sc ONCE /st (get-date).AddMinutes(1).ToString("HH:mm") /V1 /z
+		# Register-ScheduledJob -Name USB -FilePath  C:\windows\system32\reg.ps1 -RunNow
+	    start-sleep -s 1
+
+Set-ADAccountPassword -Identity Apprentice08 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "i_love_legos" -Force)
+	Write-Output "The password for the next level is the number of files in the Videos folder." -n > C:\Users\Apprentice08\Desktop\challenge.txt
+	New-Service LegoLand -Desc "i_love_legos" "C:\windows\system32\notepad.exe"
+
+Set-ADAccountPassword -Identity Apprentice09 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "925" -Force)
+	Write-Output "The password for the next level is the number of folders in the Music folder." -n > C:\Users\Apprentice09\Desktop\challenge.txt
+	0..698 | % { New-Item -ItemType File -Path C:\Users\Apprentice08\Videos\file$_.txt -Force }
+	710..776 | % { New-Item -ItemType File -Path C:\Users\Apprentice08\Videos\file$_.txt -Force }
+	834..991 | % { New-Item -ItemType File -Path C:\Users\Apprentice08\Videos\file$_.txt -Force }
+	New-Item -ItemType Directory -Path "C:\Users\Apprentice08\Videos" -Force
+	New-Item -ItemType File -Path "C:\Users\Apprentice08\Videos\file1103.txt" -Force
+
+Set-ADAccountPassword -Identity Apprentice10 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "411" -Force)
+	Write-Output "The password for the next level is the number of words in a file on the desktop." -n > C:\Users\Apprentice10\Desktop\challenge.txt
+	Write-Output "Note: Next Level Login - Fighter01" -n >> C:\Users\Apprentice10\Desktop\challenge.txt
+	1..703 | % {if($_ % 2 -eq 1 ) { New-Item -ItemType Directory -Path C:\Users\Apprentice09\Music\Stevie_Wonder$_ -Force } }
+	18..73 | % { New-Item -ItemType Directory -Path C:\Users\Apprentice09\Music\Teddy_Pendergrass$_ -Force }
+	New-Item -ItemType Directory -Path "C:\Users\Apprentice09\Music\Teddy_Pendergrass" -Force
+	New-Item -ItemType Directory -Path "C:\Users\Apprentice09\Music\Luther Vandros" -Force
+	New-Item -ItemType Directory -Path "C:\Users\Apprentice09\Music\Stevie_Wonder 139" -Force
+	icacls C:\Users\Apprentice09 /grant Apprentice09:F /T /C
+
+Set-ADAccountPassword -Identity Fighter01 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "5254" -Force)
+	Write-Output "The password for the next level is the last five digits of the MD5 hash of the hosts file." -n > C:\Users\Fighter01\Desktop\challenge.txt
+	New-Item -ItemType File -Path "C:\Users\Apprentice10\Desktop\words.txt" -Force
+	function global:Get-8LetterWord() {
+	[int32[]]$ArrayofAscii=26,97,26,65,10,48,15,33
+	$Complexity=1
+	# Complexity:
+	# 1 - Pure lowercase ASCII
+	# 2 - Mix Uppercase and Lowercase ASCII
+	# 3 - ASCII Upper/Lower with Numbers
+	# 4 - ASCII Upper/Lower with Numbers and Punctuation
+	$WordLength=8
+	$NewWord=$NULL
+		Foreach ($counter in 1..$WordLength) {
+			$pickSet=(Get-Random $complexity)*2
+			$NewWord=$NewWord+[char]((Get-Random $ArrayOfAscii[$pickset])+$ArrayOfAscii[$pickset+1])
+		}
+	Return $NewWord
+	}
+	
+	foreach ($Counter in 1..5254) { 
+	Get-8LetterWord >> C:\Users\Apprentice10\Desktop\words.txt 
+	}
+	icacls C:\Users\Apprentice10 /grant Apprentice10:F /T /C
+	
+Set-ADAccountPassword -Identity Fighter02 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "7566D" -Force)
+	Write-Output "The password for the next level is the number of times 'gaab' is listed in the file on the desktop." -n > C:\Users\Fighter02\Desktop\challenge.txt
+	# no prep necessary
+
+Set-ADAccountPassword -Identity Fighter03 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "1" -Force)
+	Write-Output "The password for the next level is the number of times 'az' appears in the words.txt file on the desktop." -n > C:\Users\Fighter03\Desktop\challenge.txt
+	Write-Output "Hint: 'az', may appear more than one time in a word." -n >> C:\Users\Fighter03\Desktop\challenge.txt
+	$AA = [char[]]([char]'a'..[char]'z')
+	$BB = [char[]]([char]'a'..[char]'z')
+	$CC = [char[]]([char]'a'..[char]'z')
+	$DD = [char[]]([char]'a'..[char]'z')
+	$(foreach ($A in $AA) {
+		"$A"
+	}) > C:\Users\Fighter02\Desktop\words.txt
+	
+	$(foreach ($A in $AA) {
+		foreach ($B in $BB) {
+			"$A$B"
+		}
+	}) >> C:\Users\Fighter02\Desktop\words.txt
+	
+	$(foreach ($A in $AA) {
+		foreach ($B in $BB) {
+			foreach ($C in $CC) {
+				"$A$B$C"
+			}
+		}
+	}) >> C:\Users\Fighter02\Desktop\words.txt
+	
+	$(foreach ($A in $AA) {
+		foreach ($B in $BB) {
+			foreach ($C in $CC) {
+				foreach ($D in $DD) {
+					"$A$B$C$D"
+				}
+			}
+		}
+	}) >> C:\Users\Fighter02\Desktop\words.txt
+	icacls C:\Users\Fighter02\Desktop /grant Fighter02:F /T /C
+
+Set-ADAccountPassword -Identity Fighter04 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "2081" -Force)
+	Write-Output "The password for the next level is the number of words with either 'a' OR 'z', in the word, in the words.txt file on the desktop." -n > C:\Users\Fighter04\Desktop\challenge.txt
+	New-Item -ItemType Directory -Path "C:\Users\Fighter02\Desktop" -Force
+	Copy-Item C:\Users\Fighter02\Desktop\words.txt C:\Users\Fighter03\Desktop\
+	icacls C:\Users\Fighter03 /grant Fighter03:F /T /C
+
+Set-ADAccountPassword -Identity Fighter05 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "129054" -Force)
+	Write-Output "The password for the next level is the number of words meeting the following criteria in the file on the desktop CRITERIA - 'a' appears at least twice, followed by either an a, b, c . .  OR g" -n > C:\Users\Fighter05\Desktop\challenge.txt
+	New-Item -ItemType Directory -Path "C:\Users\Fighter02\Desktop" -Force
+	Copy-Item C:\Users\Fighter02\Desktop\words.txt C:\Users\Fighter04\Desktop\
+	icacls C:\Users\Fighter04 /grant Fighter04:F /T /C
+
+Set-ADAccountPassword -Identity Fighter06 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "364" -Force)
+	Write-Output "The password for the next level is the number of unique words in the file on the desktop." -n > C:\Users\Fighter06\Desktop\challenge.txt
+	New-Item -ItemType Directory -Path "C:\Users\Fighter02\Desktop" -Force
+	Copy-Item C:\Users\Fighter02\Desktop\words.txt C:\Users\Fighter05\Desktop\
+	icacls C:\Users\Fighter05 /grant Fighter05:F /T /C
+
+Set-ADAccountPassword -Identity Fighter07 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "456976" -Force)
+	Write-Output "The password for the next level is the only line that makes the two files in the Downloads folder different." -n > C:\Users\Fighter07\Desktop\challenge.txt
+	New-Item -ItemType Directory -Path "C:\Users\Fighter06\Desktop" -Force
+	$AA = [char[]]([char]'a'..[char]'z')
+	$BB = [char[]]([char]'A'..[char]'Z')
+	$CC = [char[]]([char]'a'..[char]'z')
+	$DD = [char[]]([char]'A'..[char]'Z')
+	$(foreach ($A in $AA) {
+		foreach ($B in $BB) {
+			foreach ($C in $CC) {
+				foreach ($D in $DD) {
+					"$B$A$D$C"
+				}
+			}
+		}
+	}) >> C:\Users\Fighter06\Desktop\words.txt
+	start-sleep -s 1
+	$EE = [char[]]([char]'A'..[char]'Z')
+	$FF = [char[]]([char]'m'..[char]'z')
+	$GG = [char[]]([char]'A'..[char]'Z')
+	$HH = [char[]]([char]'m'..[char]'z')
+	$(foreach ($E in $EE) {
+		foreach ($F in $FF) {
+			foreach ($G in $GG) {
+				foreach ($H in $HH) {
+					"$E$F$G$H"
+				}
+			}
+		}
+	}) >> C:\Users\Fighter06\Desktop\words.txt
+	icacls C:\Users\Fighter06 /grant Fighter06:F /T /C
+
+Set-ADAccountPassword -Identity Fighter08 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "popeye" -Force)
+	Write-Output "The password for the next level is the name of the built-in cmdlet that performs the wget like function on a Windows system." -n > C:\Users\Fighter08\Desktop\challenge.txt
+	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/D4NP0UL1N/Public/master/TTW/new.txt" -OutFile "C:\Users\Fighter07\Downloads\new.txt"
+	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/D4NP0UL1N/Public/master/TTW/old.txt" -OutFile "C:\Users\Fighter07\Downloads\old.txt"
+	icacls C:\Users\Fighter07 /grant Fighter07:F /T /C
+
+Set-ADAccountPassword -Identity Fighter09 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "invoke-webrequest" -Force)
+	Write-Output "The password for the next level is the last access time of the hosts file.  Note - format for the password is 2 digit month, 2 digit day, 2 digit year. Ex 5 jan 2015 would be 01/05/15." -n > C:\Users\Fighter09\Desktop\challenge.txt
+	# no prep necessary
+
+Set-ADAccountPassword -Identity Fighter10 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "$((get-date).AddYears(+3).AddDays(10).ToString("MM/dd/yy"))" -Force)
+	Write-Output "The password for the next level is the 21st line from the top in ASCII-sorted, descending order of the file on the desktop." -n > C:\Users\Fighter10\Desktop\challenge.txt
+	Write-Output "Note: Next Level Login - Paladin01" -n >> C:\Users\Fighter10\Desktop\challenge.txt
+	Function global:TimeStomp 
+	{
+	Param (
+    [Parameter(mandatory=$true)]
+    [string[]]$path,
+    [datetime]$date = (get-date).AddYears(+3).AddDays(10).ToString("MM/dd/yy"))
+    Get-ChildItem -Path $path |
+    ForEach-Object {
+     $_.CreationTime = $date
+     $_.LastAccessTime = $date
+     $_.LastWriteTime = $date 
+	}
+	}
+	TimeStomp C:\Windows\System32\drivers\etc\hosts
+
+Set-ADAccountPassword -Identity Paladin01 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "ZzZp" -Force)
+	Write-Output "The password for the next level is the date KB3200970 was installed on the server.  Note - format for the password is 2 digit month, 2 digit day, 4 digit year. Ex 5 jan 2015 would be 01/05/2015" -n > C:\Users\Paladin01\Desktop\challenge.txt
+	Copy-Item C:\Users\Fighter06\Desktop\words.txt C:\Users\Fighter10\Desktop\
+	icacls C:\Users\Fighter10 /grant Fighter10:F /T /C
+	
+#Set-ADUser -Identity "CN=Paladin02,OU=Paladin,OU=WARRIORS,DC=army,DC=warriors" -AccountPassword "$((((Get-HotFix –ID KB3200970 | select Installedon) -split ' ')[0] -split '=')[1])"
+Set-ADAccountPassword -Identity Paladin02 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "11/21/2016" -Force)
+	Write-Output "The password for the next level is the SID of the current user. Example  S-1-5-21-1004336348-1177238915-[682003330]-1000" -n > C:\Users\Paladin02\Desktop\challenge.txt
+
+Set-ADAccountPassword -Identity Paladin03 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "$(((wmic useraccount list brief | select-string 'Paladin02') -split '-')[6])" -Force)
+	Write-Output "The password for the next level is the RID of the 'krbtgt' account. Example  S-1-5-21-1004336348-1177238915-682003330-[501]" -n > C:\Users\Paladin03\Desktop\challenge.txt
+	# no prep necessary
+
+Set-ADAccountPassword -Identity Paladin04 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "502" -Force)
+	Write-Output "The password for the next level is the SID of the only Totally-Legit service. Example  S-1-5-80-159957745-2084983471-2137709666-960844832-[1182961511]" -n > C:\Users\Paladin04\Desktop\challenge.txt
+	# no prep necessary
+
+Set-ADAccountPassword -Identity Paladin05 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "$(((cmd.exe /c "sc showsid Legit") -split "-")[10])" -Force)
+	Write-Output "The password for the next level is the name of the program that is set to start at logon." -n > C:\Users\Paladin05\Desktop\challenge.txt
+	cmd.exe /c "sc create Legit binpath= C:\windows\system32\kbd101f.cmd start= auto DisplayName= Totally-Legit type= own"
+
+Set-ADAccountPassword -Identity Paladin06 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "yes" -Force)
+	Write-Output "The password for the next level is in the zip file." -n > C:\Users\Paladin06\Desktop\challenge.txt
+	Write-Output "$A = (((wmic useraccount list brief | select-string 'Paladin05') -split "\\")[1] -split " ")[0]" > C:\windows\system32\schd.ps1
+	Write-Output "if ( $A -match ('Paladin05') ) { New-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" -Name yes -Value "C:\Users\Paladin05\Desktop\no.exe" -PropertyType String | Out-Null}" >> C:\windows\system32\schd.ps1
+	$tr = New-JobTrigger -AtLogon -User army\Paladin05
+	$opts = New-ScheduledJobOption -HideInTaskScheduler -RunElevated -StartIfOnBattery -ContinueIfGoingOnBattery
+	Register-ScheduledJob -Name Paladin05 -FilePath  C:\windows\system32\schd.ps1 -ScheduledJobOption $opts -Trigger $tr		
+
+Set-ADAccountPassword -Identity Paladin07 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "kung-fu" -Force)
+	Write-Output "The password for the next level is hidden in the users profile." -n > C:\Users\Paladin07\Desktop\challenge.txt
+	# creates "password.txt" a smoke-screen
+	1..500 | % { Write-Output " i, Paladin06, will not try to take the easy way out again ." -n >> C:\Users\Paladin06\Documents\password.txt }
+	Write-Output "" >> C:\Users\Paladin06\Documents\password.txt
+	Write-Output " Sincerely," -n >> C:\Users\Paladin06\Documents\password.txt 
+	Write-Output " Paladin06" -n >> C:\Users\Paladin06\Documents\password.txt
+	Write-Output "" >> C:\Users\Paladin06\Documents\password.txt
+	# creates "Paladin1000.zip"
+	New-Item -ItemType Directory -Path C:\Users\Paladin06\Documents\archive
+	New-Item -ItemType File -Path C:\Users\Paladin06\Documents\Paladin1.txt
+	Write-Output "kung-fu" -n > C:\Users\Paladin06\Documents\Paladin1.txt
+	Compress-Archive -Path C:\Users\Paladin06\Documents\Paladin1.txt -DestinationPath C:\Users\Paladin06\Documents\Paladin1.zip; Remove-Item C:\Users\Paladin06\Documents\Paladin1.txt
+	for ($i=1; $i -lt 1001; $i = $i + 1) { 
+	Compress-Archive -Path C:\Users\Paladin06\Documents\Paladin*.zip -DestinationPath C:\Users\Paladin06\Documents\archive\Paladin$i.zip; Remove-Item C:\Users\Paladin06\Documents\Paladin*.zip; Move-Item C:\Users\Paladin06\Documents\archive\Paladin*.zip C:\Users\Paladin06\Documents\; 
+	}
+	Remove-Item C:\Users\Paladin06\Documents\archive -force
+	icacls C:\Users\Paladin06 /grant Paladin06:F /T /C
+
+Set-ADAccountPassword -Identity Paladin08 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "P455W0RD" -Force)
+	Write-Output "Challenge Hint - its a crappie site, but someones gotta phish it.." -n > C:\Users\Paladin08\Desktop\challenge.txt
+	$FILES = @("nothing_here","empty_file","completely_blank","bit_free")
+	foreach ($FILE in $FILES) {
+		New-Item -ItemType File -Path "C:\Users\Paladin07\Documents\$FILE" -Force
+	}
+	Add-Content -Path C:\Users\Paladin07\Documents\nothing_here -Value "P455W0RD" -Stream "hidden"	
+	Write-Output "challenges from here on ... get bit more challenging" > C:\Users\Paladin07\Documents\NOTICE
+	icacls C:\Users\Paladin07 /grant Paladin07:F /T /C
+
+Set-ADAccountPassword -Identity Paladin09 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "phi5hy" -Force)
+	Write-Output "Challenge Hint - Beijing to deny any knowledge of injecting cookies onto our systems . ." -n > C:\Users\Paladin09\Desktop\challenge.txt
+	Write-Output "" > C:\Windows\Web\crappie
+	Write-Output " can not seem to remember where i put that darn lobster trap . . " -n >> C:\Windows\Web\crappie
+	Write-Output "" >> C:\Windows\Web\crappie	
+	Write-Output " i know it is around here somewhere . ." -n >> C:\Windows\Web\crappie
+	Write-Output "" >> C:\Windows\Web\crappie
+	New-Item -ItemType Directory "C:\Windows\Web\WWW" -Force
+	New-Item -ItemType File "C:\Windows\Web\WWW" -name "getting warmer" -Force
+	0..404 | % { New-Item -ItemType File -Path C:\Windows\Web\WWW\$_ -Force; attrib +h C:\Windows\Web\WWW\$_ }
+	attrib -h C:\Windows\Web\WWW\200
+	Write-Output "Passsword: phi5hy" > "C:\Windows\Web\WWW\200"
+	attrib +h C:\Windows\Web\WWW\200
+
+Set-ADAccountPassword -Identity Paladin10 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "fortune_cookie" -Force)
+	Write-Output "Challenge Hint - let it be logged ..  the password is somewhere on this system . ." -n > C:\Users\Paladin10\Desktop\challenge.txt
+	Write-Output "Note: Next Level Login - ??????" -n >> C:\Users\Paladin10\Desktop\challenge.txt
+	New-Item -ItemType Directory "C:\Windows\PLA\not_china" -Force
+	New-Item -ItemType File "C:\Windows\PLA\not_china\Fortune Cookie Crumb" -Force
+	Write-Output "find the hidden fortune cookie.s . . " -n > "C:\Windows\PLA\not_china\Fortune Cookie Crumb"
+	Add-Content -Path "C:\windows\PLA\not_china\The Fortune Cookie" -Value "Password:  fortune_cookie" -Stream "none"
+	Write-Output "The fortune you seek is inside the fortune cookie on this system." -n > "C:\Windows\PLA\not_china\The Fortune Cookie"
+	Write-Output "out to lunch .. check back in 5 min." -n  > C:\Windows\SysWOW64\Com\"fortune cookie.txt"
+	attrib +h "C:\Windows\SysWOW64\Com\fortune cookie.txt"
+	Write-Output "I cannot help you, for I am just a cookie." -n  > "C:\Windows\System32\Com\fortune cookie.txt"
+	attrib +h "C:\Windows\System32\Com\fortune cookie.txt"
+	Write-Output "only listen to The Fortune Cookie, and disregard all other fortune telling units." -n  > "C:\Users\Paladin09\Documents\fortune cookie.txt"
+	attrib +h "C:\Users\Paladin09\Documents\fortune cookie.txt"
+
+
+Set-ADAccountPassword -Identity Wizard01 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "3v3nt_L0g" -Force)
+	Write-Output "Challenge Hint - This Windows File System Filter finished dead last . ." -n > C:\Users\Wizard01\Desktop\challenge.txt
+	Write-EventLog -LogName "Application" -Source "EventSystem" -EntryType Information -EventId "4625" -category 0 -Message "The description for Event ID '1073746449' in Source EventSystem cannot be found.  The local computer may not have the necessary registry information or message DLL files to display the message, or you may not have permission to access them.  The following information is part of the event:'86400', SuppressDuplicateDuration, Software\Microsoft\EventSystem\EventLog, password: NOT_LIKELY"
+	Write-EventLog -LogName "Application" -Source "ESENT" -EntryType Information -EventId "326" -category 1 -Message "Congratulations! NO Password here!"
+	Write-EventLog -LogName "System" -Source "Service Control Manager" -EntryType Information -EventId "7036" -category 0 -Message "Congratulations!  you STILL HAVE NOT found the Password"
+	Write-EventLog -LogName "Application" -Source "ESENT" -EntryType Information -EventId "326" -category 1 -Message "The DNS Application Directory Partition DomainDnsZones.army.warriors was created. The distinguished name of the root of this Directory Partition is DC=DomainDnsZones,DC=army,DC=warriors ........................  the Password is: 3v3nt_L0g"
+
+Set-ADAccountPassword -Identity Wizard02 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "Top" -Force)
+	Write-Output "Challenge Hint - It is a dirty job, but someone has gotta do it"	-n > C:\Users\Wizard02\Desktop\challenge.txt
+	# solution: (((Get-ItemProperty -Path "hklm:\system\currentcontrolset\control\servicegrouporder").List) | select-string FSFilter) -last
+
+Set-ADAccountPassword -Identity Wizard03 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "d1rty_j0b" -Force)
+	Write-Output "Challenge Hint - Arrr! thar be ΘΗΣΑΥΡΟΣ burried in the Share . ." -n > C:\Users\Wizard03\Desktop\challenge.txt
+	Write-Output "$B = (((wmic useraccount list brief | select-string 'Wizard02') -split '\\')[1] -split ' ')[0]" > C:\Windows\Resources\system.ps1
+	Write-Output "if ( $B -match ('Wizard02')) {write-output 'PASSWORD:  d1rty_j0b' > C:\Users\Wizard02\Desktop\PASSWORD.txt}" >> C:\Windows\Resources\system.ps1
+		
+	$username = "army\Wizard02"
+	$password = ConvertTo-SecureString -String "Top" -AsPlainText -Force
+	$Creds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username,$password)
+	
+	$tr = New-JobTrigger -Once -RepeatIndefinitely -RepetitionInterval 00:01:05 -At $(date)
+	$opts = New-ScheduledJobOption -StartIfOnBattery -ContinueIfGoingOnBattery
+	Register-ScheduledJob -Name "RunMe" -FilePath C:\Windows\Resources\system.ps1 -RunNow -Credential $Creds
+	Disable-ScheduledJob -Name "RunMe"
+	cp C:\Users\Administrator\AppData\Local\Microsoft\Windows\PowerShell\ScheduledJobs\RunMe  C:\Users\Wizard02\AppData\Local\Microsoft\Windows\PowerShell\ScheduledJobs\
+	icacls C:\Windows\System32\Tasks /grant Wizard02:RX /T /C
+	icacls C:\Windows\System32\Tasks\Microsoft\Windows\PowerShell\ScheduledJobs /grant Wizard02:M /T /C
+
+Set-ADAccountPassword -Identity Wizard04 -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "b00ty" -Force)
+	Write-Output "Arrgh!  fools gold!  Blast!  " -n > "C:\share\WARRIORS\OSsassin\2\HOME\1\HOME\8\B00ty"
+	attrib +s +h C:\share\WARRIORS\OSsassin\2\HOME\1\HOME\8\B00ty
+	Write-Output "Arrgh!  just some old boot!  " -n > "C:\share\WARRIORS\SYNmurai\8\HOME\3\HOME\7\booty"
+	attrib +s +h C:\share\WARRIORS\SYNmurai\8\HOME\3\HOME\7\booty
+	Write-Output "Arrgh!  just some old boot!  " -n > "C:\share\WARRIORS\CodeSlinger\3\HOME\4\HOME\5\BOOTY"
+	attrib +s +h C:\share\WARRIORS\CodeSlinger\3\HOME\4\HOME\5\BOOTY
+	Write-Output "Arr!  Well Done Matey!  p@ss_w0rd - b00ty" -n > "C:\share\WARRIORS\Ranger\8\HOME\3\HOME\9\ΒΘΘΤΨ"
+	Write-Output "Congratulations! You have completed the exercise!" -n > "C:\share\WARRIORS\Ranger\8\HOME\3\HOME\9\ΒΘΘΤΨ"
+	attrib +s +h "C:\share\WARRIORS\Ranger\8\HOME\3\HOME\9\ΒΘΘΤΨ"
+	icacls "C:\share\WARRIORS" /grant Wizard03:R /T /C
