@@ -1,0 +1,149 @@
+Write pseudocode to design a script that would accomplish the task below.
+
+You have recently received a list of 10 processes which you need to look 
+into. Each process name is on a new line as such:
+
+explorer.exe cmd.exe …
+
+For each process listed, you will need to first check if it is running. 
+If the process is running, you must retrieve the amount of RAM which the 
+process is using and display this, along with the process name, to the 
+user. If the process is not running, you must display the process name 
+and that it is not running to the user.
+
+#create variables for the dividing criteria:
+
+           1. running
+
+           2. not running
+
+#If the status of each process [string] in the file (point to the file path) 
+is running (call out the variable):
+
+           echo Name and RAM values
+
+#Else if the status of each process is not running (using variable):
+
+           echo Name and Status
+################################################################################
+
+Write a function called “Get-RunningService” which performs the following:
+
+1) Retrieves a list of all services
+2) Filters the list to only services that are currently running
+3) Retains only 2 columns: Name and DisplayName
+4) Sorts by DisplayName
+
+Whenever this function is called, all that should be output are the 2 columns 
+specified, since it should be implied that these services are currently running.
+
+$Get-RunningService = (Get-Service  | Where-Object
+{$_.Status -eq "Running"} | Format-List -Property Name , DisplayName)
+
+################################################################################
+
+
+Write a script which performs the following:
+
+1) (In one command) Retrieves a list of all services using WMI/CIM, while 
+filtering the list to only services that are currently running
+
+2) Retains only 2 columns: Name and ProcessId
+
+3) Sorts by Name
+
+$gcim win32_service -filter "state='running'" | select name, processid
+
+################################################################################
+
+
+
+You are situated at Mancy’s computer when you learn that she had opened an 
+attachment on an email which contained a virus. The virus runs under the 
+process name “notepad.exe”. After taking preventative measures on her machine, 
+she notes that Harry also received the same email. After sending someone over 
+to take preventative measures on Harry’s box, you decide to kill all processes 
+with the name “notepad.exe” on Harry’s box remotely. Write a quick command to 
+reach out to Harry’s host at 192.168.77.153 and kill all processes named 
+“notepad.exe”. (note: the administrator account on Harry’s host is 
+“Administrator”, and its password is “baseball”).
+
+#remote access to Harry's box and kill all processes named "notepad.exe"
+
+$wmic /node:192.168.77.153 /user:Administrator path Win32_Process where 
+"name='notepad.exe'" terminate
+
+#box will then prompt for password
+
+baseball
+
+################################################################################
+
+
+You have recently been assigned to assist a company in security. The company 
+has three major organizations which use its network: Marketing, Finance, and 
+Operations. All user accounts within the company are assigned names using the 
+first three letters of their organization followed by 3 digits that are based 
+on their IP (three random examples: “MAR-004” from Marketing, “FIN-153” from 
+Finance, and “OPE-241” from Operations). One company laptop typically gets 
+passed around all three organizations, and therefore has several local accounts 
+on it from each of the organizations. It has been reported that Marketing 
+accounts have weak account settings, and you would like to view the properties 
+of these accounts for that reason. Assuming you have physical access to the 
+laptop, what is a PowerShell command you could run to access WMI and retrieve 
+only Marketing user accounts?
+
+$gwmi win32_useraccount -Filter "name like 'MAR%'"
+
+################################################################################
+
+
+You are aware of a malware which has installed itself as a service on a remote 
+host. The service is called “pnpsvc”, and it is not set to start on startup. 
+The remote host’s IP address is 192.168.45.243. Your username on that host is 
+“Administrator”, and your password is “PowerShell”. Craft a WMIC command to 
+stop the malicious service on this host, and enter it below.
+
+#initial script to access remotely and kill a malicious service named pnpsvc
+
+> wmic /node:192.168.45.243 /user:Administrator path Win32_Service where 
+"state='running' AND name='pnpsvc'" call stopservice
+
+#prompted for password:
+
+> PowerShell
+
+###############################################################################
+
+
+You are trying to retrieve a list of volumes on your machine that would have 
+over 300 GB of free space left on them. Each volume has several properties 
+associated with it. For example, a “DeviceID” might be “C:\”, or a “VolumeName” 
+might be “VM”. Consider how you would retrieve a list of volumes with over 
+300 GB of free space available, having the list detail the following properties: 
+DeviceID, FreeSpace, and VolumeName. The list should be sorted by free space 
+available. Pseudocode this script below.
+
+#assumed WMIC
+
+#set path for searching volumes: Win32_LogicalDisk (aka logicaldisk)
+
+#call for filtering condition that looks specifically at volumes with free s
+pace greater than 300000000000 bytes
+
+#get only DeviceID, FreeSpace, VolumeName
+
+#sort descending by FreeSpace
+
+###############################################################################
+
+
+You like the idea of retrieving volumes with over 300 GB of free space so 
+much that you decide to turn the script into a module. Create a PowerShell 
+script to retrieve the volume data via WMI. The script should include 
+filtering the data to only volumes with over 300 GB of free space available, 
+and should only include the following properties: DeviceID, FreeSpace, and 
+VolumeName. The data should be sorted by the amount of free space available. 
+
+$gwmi win32_logicaldisk -Filter "FreeSpace>'300000000000'" | sort Freespace 
+-descending | Format-List DeviceID,VolumeName,FreeSpace
